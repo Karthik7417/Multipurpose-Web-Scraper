@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Web scraper tasks{% endblock %}
+
+{% block content %}
+    <table class="table my-4">
+        <thead class="thead-light">
+            <tr>
+                <th class="align-middle" scope="col">Title</th>
+                <th class="align-middle" scope="col">Description</th>
+                <th class="align-middle" scope="col">Owner</th>
+                <th class="align-middle" scope="col">Created on</th>
+                <th class="align-middle" scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+
+                    <th scope="row">{{ task.task_name }}</th>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.created_by }}</td>
+                    <td id="t{{ loop.index0 }}">{{ task.created_on }}</td>
+                    <td>
+                        <div class="row">
+                            <a class="col-sm-1" href="{{ url_for("tasks.details", id=task._id) }}"><i class="far fa-edit"></i></a>
+                            <a class="col-sm-1" href="{{ url_for("tasks.delete", id=task._id) }}"><font color="red"><i class="far fa-trash-alt"></i></font></a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="btn-toolbar justify-content-start" role="toolbar">
+        <div role="group">
+            <a class="btn btn-primary" href="{{ url_for("tasks.create") }}">Create</a>
+        </div>
+    </div>
+    <script>
+        convertTimeDateToLocal({{ tasks|length }});
+    </script>
+{% endblock %}

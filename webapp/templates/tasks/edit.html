@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit task{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <input type="hidden" name="_id" value="{{ task._id }}">
+        <input type="hidden" name="created_on" value="{{ task.created_on }}">
+        <div class="card my-4">
+            <div class="card-header">
+                Edit task
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
+                    <div class="col-sm-10">
+                        <input name="task_name" type="text" class="form-control" id="inputTitle" placeholder="Enter task title" value="{{ task.task_name }}" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputOwner" class="col-sm-2 col-form-label">Owner</label>
+                    <div class="col-sm-10">
+                        <input name="created_by" type="text" class="form-control" id="inputOwner" placeholder="Enter owner's name" value="{{ task.created_by }}" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                        <textarea name="description" type="text" class="form-control" id="inputDescription" placeholder="Enter task description" required>{{ task.description }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-toolbar justify-content-start" role="toolbar">
+            <div role="group">
+                <a class="btn btn-secondary mr-2" href="{{ url_for("tasks.details", id=task._id) }}">Cancel</a>
+                <button class="btn btn-success" type="submit">Save</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Parsed entities{% endblock %}
+
+{% block content %}
+    <h3>Parsed entities</h3>
+    <table class="table my-4">
+        <thead class="thead-light">
+            <tr>
+                <th class="align-middle" scope="col"></th>
+                <th class="align-middle" scope="col">Name</th>
+                <th class="align-middle" scope="col">Number of entities</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for website in websites %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <th scope="row"><a href="{{ website.website_url }}">{{ website.website_name }}</a></th>
+                    <td>{{ website.count }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="btn-toolbar justify-content-start" role="toolbar">
+        <div role="group">
+            <a class="btn btn-secondary" href="{{ url_for("tasks.details", id=task_id) }}">Back</a>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+{% endblock %}

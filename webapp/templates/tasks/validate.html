@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Websites validation{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <div class="card my-4">
+            <div class="card-header">
+                Start websites validation?
+            </div>
+            <div class="card-body">
+                <div class="form-group row">
+                    <b class="col-sm-2">Title</b>
+                    <div class="col-sm-10">
+                        <label>{{ task.task_name }}</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <b class="col-sm-2">Owner</b>
+                    <div class="col-sm-10">
+                        <label>{{ task.created_by }}</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <b class="col-sm-2">Created on</b>
+                    <div class="col-sm-10">
+                        <label id="t0">{{ task.created_on }}</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <b class="col-sm-2">Description</b>
+                    <div class="col-sm-10">
+                        <label>{{ task.description }}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-toolbar justify-content-start" role="toolbar">
+            <div role="group">
+                <a class="btn btn-secondary mr-2" href="{{ url_for("tasks.details", id=task._id) }}">Cancel</a>
+                <button class="btn btn-danger" type="submit">Validate</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        convertTimeDateToLocal(1);
+    </script>
+{% endblock %}

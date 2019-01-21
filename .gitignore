@@ -1,3 +1,15 @@
-
-workers/settings.py
+workers/.serverless/
+node_modules/
+workers/.requirements.zip
+.idea/*
+.DS_Store
+.requirements.zip
+.serverless/
+package.json
+sqs-lambda-webscraper/
+venv/
+webapp/__pycache__/
+webapp/templates/.DS_Store
 workers/package.json
+workers/settings.py
+webapp/settings.py

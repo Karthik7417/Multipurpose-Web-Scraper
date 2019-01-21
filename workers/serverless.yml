@@ -1,0 +1,65 @@
+service: sqs-lambda-webscraper # NOTE: update this with your service name
+
+package:
+  exclude:
+    - venv/**
+
+plugins:
+  - serverless-python-requirements
+custom:
+  queueName: <queueName>
+  pythonRequirements:
+    dockerizePip: true
+    zip: true
+    slim: true
+    slimPatterns:
+      - "*.egg-info*"
+
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: production
+  region: <region>
+  timeout: 200
+  memorySize: 1024
+#  deploymentBucket:
+#    name: web-scraper.${self:provider.region}.deploys
+
+# you can add statements to the Lambda function's IAM Role here
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "sqs:SendMessage"
+        - "sqs:ReceiveMessage"
+      Resource:
+        Fn::GetAtt: [ SQSQueue, Arn ]
+
+# you can define service wide environment variables here
+  environment:
+    SQS_URL:
+      Ref: SQSQueue
+    MONGODB_HOST : <MONGODB_HOST>
+    MONGODB_PORT : <MONGODB_PORT>
+    MONGODB_DATABASE : <MONGODB_DATABASE>
+    REGION_NAME : <REGION_NAME>
+    NLTK_DATA: "./nltk_data"
+
+functions:
+  action_switch:
+    handler: handler.action_switch
+    events:
+          - sqs:
+              arn:
+                Fn::GetAtt: [ SQSQueue, Arn ]
+resources:
+  Resources:
+    S3:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: web-scraper-prod
+
+    SQSQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:custom.queueName}

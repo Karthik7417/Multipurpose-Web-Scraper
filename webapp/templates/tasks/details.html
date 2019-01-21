@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}View task{% endblock %}
+
+{% block content %}
+    <div class="card my-4">
+        <div class="card-header">
+            Task control
+        </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <b class="col-sm-2">Title</b>
+                <div class="col-sm-10">
+                    <label>{{ task.task_name }}</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <b class="col-sm-2">Owner</b>
+                <div class="col-sm-10">
+                    <label>{{ task.created_by }}</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <b class="col-sm-2">Created on</b>
+                <div class="col-sm-10">
+                    <label id="t0">{{ task.created_on }}</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <b class="col-sm-2">Description</b>
+                <div class="col-sm-10">
+                    <label>{{ task.description }}</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <b class="col-sm-2">Uploaded websites</b>
+                {% if task.websites_count > 0 %}
+                    <div class="col-sm-3">
+                        <a href="{{ url_for("tasks.input", id=task._id) }}">{{ task.websites_sts }}</a>
+                    </div>
+                    <div class="col-sm-7">
+                        <a href="{{ url_for("tasks.validate", id=task._id) }}" class="btn btn-sm btn-success"><i class="fas fa-search"></i> Validate</a>
+                    </div>
+                {% else %}
+                    <div class="col-sm-2">
+                        <label>{{ task.websites_count }}</label>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group row">
+                <b class="col-sm-2">Validated websites</b>
+                {% if task.validated_count > 0 %}
+                    <div class="col-sm-3">
+                        <a href="{{ url_for("tasks.validated", id=task._id) }}">{{ task.validated_count }}</a>
+                    </div>
+                    <div class="col-sm-7">
+                        <a href="{{ url_for("tasks.crawl", id=task._id) }}" class="btn btn-sm btn-success"><i class="fas fa-globe-americas"></i> Crawl</a>
+                    </div>
+                {% else %}
+                    <div class="col-sm-2">
+                        <label>{{ task.validated_count }}</label>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group row">
+                <b class="col-sm-2">Crawled pages</b>
+                {% if task.pages_count > 0 %}
+                    <div class="col-sm-3">
+                        <a href="{{ url_for("tasks.crawled", id=task._id) }}">{{ task.pages_count }}</a>
+                    </div>
+                    <div class="col-sm-7">
+                        <a href="{{ url_for("tasks.parse", id=task._id) }}" class="btn btn-sm btn-success"><i class="fas fa-user-friends"></i> Parse</a>
+                    </div>
+                {% else %}
+                    <div class="col-sm-2">
+                        <label>{{ task.pages_count }}</label>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group row">
+                <b class="col-sm-2">Parsed entities</b>
+                {% if task.entities_count > 0 %}
+                    <div class="col-sm-3">
+                        <a href="{{ url_for("tasks.parsed", id=task._id) }}">{{ task.entities_count }}</a>
+                    </div>
+                    <div class="col-sm-7">
+                        <a href="" class="btn btn-sm btn-secondary"><i class="fas fa-clipboard-list"></i> Report</a>
+                    </div>
+                {% else %}
+                    <div class="col-sm-2">
+                        <label>{{ task.entities_count }}</label>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="btn-toolbar justify-content-start" role="toolbar">
+        <div role="group">
+            <a class="btn btn-secondary mr-2" href="{{ url_for("tasks.index") }}">Back</a>
+            <a class="btn btn-primary" href="{{ url_for("tasks.edit", id=task._id) }}">Edit</a>
+        </div>
+    </div>
+    <script>
+        convertTimeDateToLocal(1);
+    </script>
+{% endblock %}
