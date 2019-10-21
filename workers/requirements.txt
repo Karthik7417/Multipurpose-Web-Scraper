@@ -19,5 +19,5 @@ s3transfer==0.1.13
 six==1.11.0
 urllib3==1.23
 tldextract==2.2.0
-nltk==3.3
+nltk==3.4.5
 htmlmin==0.1.12
